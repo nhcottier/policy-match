@@ -117,6 +117,19 @@
     return `<span class="party-mark${isRated ? "" : " is-blinded"}">${isRated ? escapeHTML(policy.party) : "Party hidden until rated"}</span>`;
   }
 
+  function policyOrderKey(policyID) {
+    const separator = policyID.lastIndexOf("-");
+    return separator === -1 ? policyID : policyID.slice(separator + 1);
+  }
+
+  function comparePolicyOrder(lhs, rhs) {
+    const lhsKey = policyOrderKey(lhs.id);
+    const rhsKey = policyOrderKey(rhs.id);
+    if (lhsKey !== rhsKey) return lhsKey < rhsKey ? -1 : 1;
+    if (lhs.id === rhs.id) return 0;
+    return lhs.id < rhs.id ? -1 : 1;
+  }
+
   function filteredPolicies() {
     const query = state.query.trim().toLocaleLowerCase("en-NZ");
     const { parties, topics, statuses, unansweredOnly } = state.filters;
@@ -127,7 +140,7 @@
       if (unansweredOnly && ratingFor(policy.id) !== null) return false;
       if (query && !`${policy.title} ${policy.summary}`.toLocaleLowerCase("en-NZ").includes(query)) return false;
       return true;
-    });
+    }).sort(comparePolicyOrder);
   }
 
   function renderRatingControl(policyID, detail = false) {
