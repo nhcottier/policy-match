@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f3ea">
   <meta name="description" content="Explore New Zealand party policies, record your views privately and compare your responses.">
-  <title>Policy Match — Web app</title>
+  <title>Policy Match</title>
   <link rel="icon" href="../icon.png">
   <link rel="stylesheet" href="app.css">
 </head>
@@ -28,14 +28,16 @@
           <h1 id="policies-heading">Policies</h1>
           <p class="progress-copy" id="progress-copy">Loading…</p>
         </div>
+      </div>
+
+      <div class="search-toolbar">
+        <div class="search-wrap">
+          <label for="policy-search">Search titles and summaries</label>
+          <input id="policy-search" type="search" autocomplete="off" placeholder="Search policies">
+        </div>
         <button class="filter-button" id="filter-button" type="button" aria-haspopup="dialog">
           <span aria-hidden="true">≡</span> Filters <span class="filter-count" id="filter-count" hidden></span>
         </button>
-      </div>
-
-      <div class="search-wrap">
-        <label for="policy-search">Search titles and summaries</label>
-        <input id="policy-search" type="search" autocomplete="off" placeholder="Search policies">
       </div>
 
       <div class="policy-workspace">

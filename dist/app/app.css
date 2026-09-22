@@ -70,7 +70,7 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; letter-spacing: -.0
 h1 { margin: 0; font-size: clamp(2.35rem, 5vw, 4rem); font-weight: 600; }
 h2 { font-size: 1.45rem; }
 h3 { font-size: 1.3rem; }
-.workspace-header { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.3rem; }
+.workspace-header { margin-bottom: 1.3rem; }
 .progress-copy { margin: .35rem 0 0; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .filter-button, .primary-button, .danger-button, .text-button, .icon-button, .mobile-close {
@@ -84,6 +84,7 @@ h3 { font-size: 1.3rem; }
   padding: .72rem 1rem;
   font-weight: 700;
 }
+.filter-button { min-height: 48px; white-space: nowrap; }
 .filter-button:hover, .primary-button:hover { background: var(--accent); }
 .filter-count {
   display: inline-grid;
@@ -97,7 +98,21 @@ h3 { font-size: 1.3rem; }
   font-size: .75rem;
 }
 
-.search-wrap { margin-bottom: 1.2rem; }
+.search-toolbar {
+  position: sticky;
+  top: 68px;
+  z-index: 18;
+  display: grid;
+  grid-template-columns: minmax(0, 44rem) auto;
+  align-items: stretch;
+  gap: .75rem;
+  width: min(52rem, 100%);
+  margin: -.4rem 0 .8rem;
+  padding: .4rem 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+.search-wrap { min-width: 0; }
 .search-wrap label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .search-wrap input {
   width: 100%;
@@ -270,8 +285,15 @@ dialog::backdrop { background: rgba(5, 18, 30, .55); backdrop-filter: blur(3px);
   main { padding-left: .75rem; padding-right: .75rem; }
   .view { padding-top: 1.25rem; }
   h1 { font-size: 2.45rem; }
-  .workspace-header { align-items: center; }
-  .filter-button { padding: .62rem .75rem; }
+  .search-toolbar {
+    top: 60px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    width: auto;
+    margin: -.4rem -.75rem .65rem;
+    padding: .55rem .75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .filter-button { min-height: 46px; padding: .62rem .75rem; }
   .policy-workspace { margin: 0 -.75rem; border-left: 0; border-right: 0; box-shadow: none; }
   .policy-card-top { align-items: start; }
   .rating-options { gap: .2rem; }
