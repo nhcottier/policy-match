@@ -104,6 +104,19 @@
     return PARTY_COLOURS[party] || "#566166";
   }
 
+  function isPolicyRated(policyID) {
+    return ratingFor(policyID) !== null;
+  }
+
+  function policyColour(policy) {
+    return isPolicyRated(policy.id) ? partyColour(policy.party) : "#566166";
+  }
+
+  function policyAttribution(policy) {
+    const isRated = isPolicyRated(policy.id);
+    return `<span class="party-mark${isRated ? "" : " is-blinded"}">${isRated ? escapeHTML(policy.party) : "Party hidden until rated"}</span>`;
+  }
+
   function filteredPolicies() {
     const query = state.query.trim().toLocaleLowerCase("en-NZ");
     const { parties, topics, statuses, unansweredOnly } = state.filters;
@@ -132,9 +145,9 @@
   }
 
   function policyCard(policy) {
-    return `<article class="policy-card${state.selectedPolicyID === policy.id ? " is-selected" : ""}" style="--party:${partyColour(policy.party)}" data-card-id="${escapeHTML(policy.id)}">
+    return `<article class="policy-card${state.selectedPolicyID === policy.id ? " is-selected" : ""}" style="--party:${policyColour(policy)}" data-card-id="${escapeHTML(policy.id)}">
       <div class="policy-card-top">
-        <span class="party-mark">${escapeHTML(policy.party)}</span>
+        ${policyAttribution(policy)}
         <span class="topic">${escapeHTML(policy.topic)}</span>
       </div>
       <button type="button" class="policy-open" data-open-policy="${escapeHTML(policy.id)}" aria-label="Open ${escapeHTML(policy.title)}">
@@ -161,10 +174,11 @@
 
   function policyDetailMarkup(policy) {
     const response = responseFor(policy.id);
-    return `<div class="policy-detail-content" style="--party:${partyColour(policy.party)}">
+    const isRated = isPolicyRated(policy.id);
+    return `<div class="policy-detail-content" style="--party:${policyColour(policy)}">
       <header class="detail-head">
         <div class="detail-head-row">
-          <span class="party-mark">${escapeHTML(policy.party)}</span>
+          ${policyAttribution(policy)}
           <span class="topic">${escapeHTML(policy.topic)}</span>
         </div>
         <h2>${escapeHTML(policy.title)}</h2>
@@ -174,6 +188,7 @@
         <h3>Policy summary</h3>
         <p>${escapeHTML(policy.summary)}</p>
         <a class="source-link" href="${escapeHTML(policy.sourceURL)}" target="_blank" rel="noopener noreferrer">Open original source <span aria-hidden="true">↗</span></a>
+        ${isRated ? "" : '<p class="source-note">The official source may identify the party before you rate.</p>'}
       </section>
       <section class="detail-section">
         <h3>Your view</h3>
