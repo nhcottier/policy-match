@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3ea">
+  <meta name="description" content="Explore New Zealand party policies, record your views privately and compare your responses.">
+  <title>Policy Match — Web app</title>
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to policies</a>
+
+  <header class="app-header">
+    <a class="brand" href="../" aria-label="Policy Match overview">
+      <img src="../icon.png" width="42" height="42" alt="">
+      <span>Policy Match</span>
+    </a>
+    <p class="header-status" id="header-status" aria-live="polite">Loading policy data…</p>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="view view-policies is-active" id="policies-view" aria-labelledby="policies-heading">
+      <div class="workspace-header">
+        <div>
+          <p class="eyebrow">Your responses</p>
+          <h1 id="policies-heading">Policies</h1>
+          <p class="progress-copy" id="progress-copy">Loading…</p>
+        </div>
+        <button class="filter-button" id="filter-button" type="button" aria-haspopup="dialog">
+          <span aria-hidden="true">≡</span> Filters <span class="filter-count" id="filter-count" hidden></span>
+        </button>
+      </div>
+
+      <div class="search-wrap">
+        <label for="policy-search">Search titles and summaries</label>
+        <input id="policy-search" type="search" autocomplete="off" placeholder="Search policies">
+      </div>
+
+      <div class="policy-workspace">
+        <section class="policy-list-panel" aria-label="Policy list">
+          <div class="list-summary" id="list-summary" aria-live="polite"></div>
+          <div class="policy-list" id="policy-list"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <h2>No policies found</h2>
+            <p>Try changing your search or filters.</p>
+            <button type="button" class="text-button" id="empty-clear">Clear search and filters</button>
+          </div>
+        </section>
+
+        <aside class="policy-detail-panel" id="detail-panel" aria-label="Selected policy">
+          <div class="detail-placeholder" id="detail-placeholder">
+            <div aria-hidden="true" class="placeholder-mark">↗</div>
+            <h2>Select a policy</h2>
+            <p>Choose a policy to read its full summary and record your view.</p>
+          </div>
+          <article id="policy-detail" hidden></article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view view-match" id="match-view" aria-labelledby="match-heading" hidden>
+      <div class="match-intro">
+        <p class="eyebrow">Your policy ledger</p>
+        <h1 id="match-heading">Policy Match</h1>
+        <p class="match-total" id="match-total">0 policies rated</p>
+        <p>Percentages use only the active policies you rated for each party. The order is a calculation, not a recommendation.</p>
+      </div>
+      <div class="score-list" id="score-list"></div>
+      <p class="method-note">Strongly agree scores 100, Agree 75, Unsure 50, Disagree 25 and Strongly disagree 0. Unanswered policies are excluded.</p>
+    </section>
+
+    <section class="view view-about" id="about-view" aria-labelledby="about-heading" hidden>
+      <article class="about-card">
+        <p class="eyebrow">Independent civic tool</p>
+        <h1 id="about-heading">About Policy Match</h1>
+        <p>Explore announced policies for New Zealand’s 2026 general election and compare only the policies you choose to rate.</p>
+
+        <h2>Policy data</h2>
+        <dl class="facts">
+          <div><dt>Data last updated</dt><dd id="data-date">—</dd></div>
+          <div><dt>Dataset version</dt><dd id="data-version">—</dd></div>
+          <div><dt>Policies</dt><dd id="data-count">—</dd></div>
+          <div><dt>Sources</dt><dd>Included for every policy</dd></div>
+        </dl>
+
+        <h2>Privacy</h2>
+        <ul class="plain-list">
+          <li>Your responses and notes stay in this browser.</li>
+          <li>No account, advertising, analytics or political tracking.</li>
+          <li>Your responses are not uploaded or shared by Policy Match.</li>
+        </ul>
+        <p class="notice">Clearing this browser’s site data, using a private window or changing browser or device may permanently remove your responses.</p>
+
+        <h2>Independence</h2>
+        <p>Policy Match is not affiliated with the Electoral Commission or any political party. Results summarise the responses you entered; they are not voting advice.</p>
+
+        <h2>Your responses</h2>
+        <p><strong id="about-rated-count">0</strong> policies rated in this browser.</p>
+        <button class="danger-button" id="clear-all-button" type="button" disabled>Clear all responses and notes</button>
+
+        <div class="about-links">
+          <a href="../privacy/">Privacy policy</a>
+          <a href="../support/">Support</a>
+          <a href="https://apps.apple.com/app/policy-match/id6812607362">Apple app</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <nav class="tab-bar" aria-label="App sections">
+    <button type="button" data-view="policies" class="is-active" aria-current="page"><span aria-hidden="true">☷</span>Policies</button>
+    <button type="button" data-view="match"><span aria-hidden="true">▥</span>Match</button>
+    <button type="button" data-view="about"><span aria-hidden="true">ⓘ</span>About</button>
+  </nav>
+
+  <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title">
+    <form method="dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">Narrow the list</p>
+          <h2 id="filter-title">Filters</h2>
+        </div>
+        <button value="close" class="icon-button" aria-label="Close filters">×</button>
+      </div>
+      <label class="toggle-row"><input type="checkbox" id="unanswered-only"> <span>Unanswered policies only</span></label>
+      <fieldset><legend>Party</legend><div id="party-filters" class="check-list"></div></fieldset>
+      <fieldset><legend>Policy status</legend><div id="status-filters" class="check-list"></div></fieldset>
+      <fieldset><legend>Topic</legend><div id="topic-filters" class="check-list two-column"></div></fieldset>
+      <div class="dialog-actions">
+        <button type="button" class="text-button" id="clear-filters">Clear filters</button>
+        <button value="close" class="primary-button">Show policies</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="mobile-detail-dialog" class="mobile-detail-dialog" aria-label="Policy details">
+    <button type="button" class="mobile-close" id="mobile-detail-close">← Back to policies</button>
+    <article id="mobile-policy-detail"></article>
+  </dialog>
+
+  <dialog id="clear-dialog" class="confirm-dialog" aria-labelledby="clear-title">
+    <form method="dialog">
+      <h2 id="clear-title">Clear every response and note?</h2>
+      <p>This removes Policy Match data saved in this browser. It cannot be undone.</p>
+      <div class="dialog-actions">
+        <button value="cancel" class="text-button">Cancel</button>
+        <button value="confirm" class="danger-button">Clear everything</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
