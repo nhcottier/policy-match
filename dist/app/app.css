@@ -146,7 +146,8 @@ h3 { font-size: 1.3rem; }
   line-height: 1.15;
   font-weight: 680;
 }
-.rating-button span { display: block; font-size: 1rem; line-height: 1; margin-bottom: .25rem; }
+.rating-icon { display: block; width: 1.2rem; height: 1.2rem; margin: 0 auto .28rem; fill: currentColor; }
+.rating-button span { display: block; }
 .rating-button:hover { border-color: var(--accent); }
 .rating-button.is-selected { background: var(--accent); border-color: var(--accent); color: white; }
 .clear-response { margin-top: .45rem; padding: .2rem 0; background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: .78rem; }
@@ -275,7 +276,7 @@ dialog::backdrop { background: rgba(5, 18, 30, .55); backdrop-filter: blur(3px);
   .policy-card-top { align-items: start; }
   .rating-options { gap: .2rem; }
   .rating-button { font-size: .6rem; min-height: 57px; border-radius: .3rem; }
-  .rating-button span { font-size: .9rem; }
+  .rating-icon { width: 1.05rem; height: 1.05rem; }
   .tab-bar button { min-width: 0; flex: 1; padding: .6rem .5rem; font-size: .75rem; }
   .view-match, .view-about { padding-left: .35rem; padding-right: .35rem; }
   .score-row { grid-template-columns: 38px 1fr auto; gap: .7rem; }

@@ -2,11 +2,11 @@
   "use strict";
 
   const RATINGS = [
-    { value: 100, label: "Strongly agree", short: "Strongly agree", icon: "▲" },
-    { value: 75, label: "Agree", short: "Agree", icon: "+" },
-    { value: 50, label: "Don't care / Unsure", short: "Unsure", icon: "−" },
-    { value: 25, label: "Disagree", short: "Disagree", icon: "−" },
-    { value: 0, label: "Strongly disagree", short: "Strongly disagree", icon: "▼" }
+    { value: 100, label: "Strongly agree", short: "Strongly agree", icon: "hand-thumbs-up-fill" },
+    { value: 75, label: "Agree", short: "Agree", icon: "hand-thumbs-up" },
+    { value: 50, label: "Don't care / Unsure", short: "Unsure", icon: "dash-circle" },
+    { value: 25, label: "Disagree", short: "Disagree", icon: "hand-thumbs-down" },
+    { value: 0, label: "Strongly disagree", short: "Strongly disagree", icon: "hand-thumbs-down-fill" }
   ];
 
   const STATUS_LABELS = {
@@ -122,7 +122,8 @@
     const buttons = RATINGS.map(rating => `
       <button type="button" class="rating-button${selected === rating.value ? " is-selected" : ""}" data-rate="${rating.value}"
         aria-label="${escapeHTML(rating.label)}" aria-pressed="${selected === rating.value}">
-        <span aria-hidden="true">${rating.icon}</span>${escapeHTML(rating.short)}
+        <svg class="rating-icon" aria-hidden="true" focusable="false"><use href="icons/bootstrap-rating-icons.svg#${rating.icon}"></use></svg>
+        <span>${escapeHTML(rating.short)}</span>
       </button>`).join("");
     return `<div class="rating-control${detail ? " detail-rating" : ""}" data-policy-id="${escapeHTML(policyID)}">
       <div class="rating-options" role="group" aria-label="Your view">${buttons}</div>
